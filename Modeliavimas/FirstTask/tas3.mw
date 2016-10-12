@@ -4,7 +4,7 @@
 <Label-Scheme value="2" prefix=""/>
 <View-Properties presentation="true" autoexpanding_sections="true">
 </View-Properties>
-<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" errorcursor="false" longdelim="true" plotoptions="" quiet="false" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="1080" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
+<MapleNet-Properties elisiondigitsbefore="100" labelling="true" indentamount="4" elisiontermsthreshold="10000" ansi="false" errorbreak="1" useclientjvm="true" echo="1" imaginaryunit="I" labelwidth="20" contextmenusize="automatic" plotdriver="opengl" elisiondigitsafter="100" plotoutput="terminal" helpbrowser="standard" rtablesize="10" elisiontermsbefore="100" elisiondigitsthreshold="10000" typesetting="standard" plotdevice="inline" verboseproc="1" showassumed="1" errorcursor="false" longdelim="true" plotoptions="" quiet="false" elisiontermsafter="100" screenwidth="79" preplot="" prettyprint="3" displayprecision="-1" screenpixelheight="768" warnlevel="3" screenheight="25" latexwidth="8.0" postplot="" prompt="&gt; " ShowLabels="true"/>
 <Styles>
 <Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
 <Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" placeholder="false"/>
@@ -102,8 +102,11 @@
 </Group>
 <Group labelreference="L218" drawlabel="true">
 <Input>
-<Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+<Text-field prompt="&gt; " style="Maple Input" layout="Normal">dsolve(eq, implicit);</Text-field>
 </Input>
+<Output>
+<Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYoLUYjNiotRiM2KC1JI21pR0YkNiVRI2xuRicvJSdpdGFsaWNHUSZmYWxzZUYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy1JI21vR0YkNi1RMCZBcHBseUZ1bmN0aW9uO0YnRjYvJSZmZW5jZUdGNS8lKnNlcGFyYXRvckdGNS8lKXN0cmV0Y2h5R0Y1LyUqc3ltbWV0cmljR0Y1LyUobGFyZ2VvcEdGNS8lLm1vdmFibGVsaW1pdHNHRjUvJSdhY2NlbnRHRjUvJSdsc3BhY2VHUSYwLjBlbUYnLyUncnNwYWNlR0ZNLUkobWZlbmNlZEdGJDYkLUYjNiYtRiM2Jy1GOjYtUSomdW1pbnVzMDtGJ0Y2Rj1GP0ZBRkNGRUZHRkkvRkxRLDAuMjIyMjIyMmVtRicvRk9GZW4tSSZtZnJhY0dGJDYoLUYjNiYtRiM2KUZXLUkjbW5HRiQ2JFEiMkYnRjYtRjo2LVEiK0YnRjZGPUY/RkFGQ0ZFRkdGSUZaRmZuLUYjNiYtRl9vNiRRIjRGJ0Y2LUY6Ni1RMSZJbnZpc2libGVUaW1lcztGJ0Y2Rj1GP0ZBRkNGRUZHRklGS0ZOLUYjNigtRjA2JVEieUYnL0Y0USV0cnVlRicvRjdRJ2l0YWxpY0YnRjktRlE2JC1GIzYmLUYwNiVRInhGJ0ZicEZkcC8lK2ZvcmVncm91bmRHUShbMCwwLDBdRicvJSlyZWFkb25seUdGNUY2RjZGXXFGYHFGNkY2RmJvLUYjNiZGZ29Gam9GanBGNkY2Rl1xRmBxRjYtRiM2Ji1GIzYmRmJxLUY6Ni1RKCZtaW51cztGJ0Y2Rj1GP0ZBRkNGRUZHRklGWkZmbi1GX282JFEjMTFGJ0Y2RjZGXXFGYHFGNi8lLmxpbmV0aGlja25lc3NHUSIxRicvJStkZW5vbWFsaWduR1EnY2VudGVyRicvJSludW1hbGlnbkdGY3IvJSliZXZlbGxlZEdGNUZdcUZgcUY2Rl1xRmBxRjZGNkZdcUZgcUY2RmhxLUYjNiZGXm9Gam8tRiM2KEYvRjktRlE2JC1GIzYmLUZobjYoLUYjNiYtRiM2KUZXLUZfbzYkUSMyMEYnRjZGaHFGZW9GYm9GYnFGNkZdcUZgcUY2RmRxRl5yRmFyRmRyRmZyRl1xRmBxRjZGNkZdcUZgcUY2RjZGaHEtRiM2KEYvRjktRlE2JEZkcUY2Rl1xRmBxRjZGaHEtRjA2JVEkX0MxRidGYnBGZHBGNi1GOjYtUSI9RidGNkY9Rj9GQUZDRkVGR0ZJL0ZMUSwwLjI3Nzc3NzhlbUYnL0ZPRmR0LUZfbzYkUSIwRidGNkZdcUZgcUY2">LywqLUkjbG5HNiQlKnByb3RlY3RlZEdJKF9zeXNsaWJHNiI2IywkKiYsKCEiIyIiIi1JInlHRik2I0kieEdGKSIiJUYzRjRGLywmRjNGNCEjNkYvISIiRjdGLy1GJTYjKiYsKCEjP0YvRjAhIiVGM0Y0Ri9GNUY3Ri4tRiU2I0Y1RjdJJF9DMUdGKUY3IiIh</Equation></Text-field>
+</Output>
 </Group>
 <Group labelreference="L219" drawlabel="true">
 <Input>
@@ -117,9 +120,9 @@
 y=-10..10,stepsize=0.2);</Text-field>
 </Input>
 <Output>
-<Text-field style="Line Printed Output" layout="Line Printed Output">Warning, plot may be incomplete, the following errors(s) were issued:
-   cannot evaluate the solution further left of 1.8571429, probably a singularity</Text-field>
-<Text-field style="Line Printed Output" layout="Line Printed Output">Warning, plot may be incomplete, the following errors(s) were issued:
+<Text-field style="Line Printed Output" layout="Line Printed Output">Warning, plot may be incomplete, the following errors(s) were issued:</Text-field>
+<Text-field style="Line Printed Output" layout="Line Printed Output">   cannot evaluate the solution further left of 1.8571429, probably a singularity
+Warning, plot may be incomplete, the following errors(s) were issued:
    cannot evaluate the solution further left of 2.4210525, probably a singularity</Text-field>
 </Output>
 <Output>
@@ -128,7 +131,7 @@ y=-10..10,stepsize=0.2);</Text-field>
 </Group>
 <Group view="presentation" hide-input="false" hide-output="true" inline-output="false" labelreference="L1" drawlabel="true">
 <Input>
-<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">JSFH</Equation></Text-field>
+<Text-field style="Text" layout="Normal"><Equation executable="false" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYkLUkjbWlHRiQ2I1EhRicvJSxtYXRodmFyaWFudEdRJ25vcm1hbEYn">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYjLUkjbWlHRiQ2I1EhRic=</Equation></Text-field>
 </Input>
 </Group></Presentation-Block>
 </Worksheet>
