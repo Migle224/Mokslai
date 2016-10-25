@@ -1,3 +1,8 @@
+/*Migle Pucetaite, PS4, 3gr., 1310521, 2ud.: 2D*/
+/*"A jaunesnis negu to paties kurso studentas B";*/
+/*jaunesnisKursiokas(vaiva, egle).*/
+/*jaunesnisKursiokas(toma, egle).*/
+
 studentas(andrius, 3).
 studentas(audrius, 2 ).
 studentas(bronius, 1).
@@ -40,4 +45,14 @@ yraVyresnis(toma, ugne).
 yraVyresnis(ugne, vaiva).
 yraVyresnis(vaiva, zilvinas).
 
-jaunesnisKursiokas(jaunesnis, vyresis):studentas(jaunesnis,KursasJ), Studentas(
+jaunesnisKursiokas(Jaunesnis, Vyresnis):-studentas(Jaunesnis, KursasJ),
+	                                 studentas(Vyresnis, KursasV),
+					 KursasJ =:= KursasV,
+					 yraJaunesnis(Jaunesnis, Vyresnis).
+
+yraJaunesnis(Tarpinis, Vyresnis):- yraVyresnis(Vyresnis, Tarpinis);
+                                   yraVyresnis(X, Tarpinis), yraJaunesnis(X, Vyresnis).
+
+
+
+

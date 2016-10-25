@@ -1,5 +1,6 @@
-f(1, 1).
-f(N, F):- N1 is N-1, f(N1, F1), F is N*F1.
+/*Migle Pucetaite, PS4, 3gr., 1310521, 2užd.: 6B*/
+/*Dalyba*/
+/*dalinti(6,3,X).*/
 
-dalinti(Dalinys, Daliklis, 1).
+dalinti(Dalinys, Dalinys, 1).
 dalinti(Dalinys, Daliklis, Dalmuo):- DalinysNaujas is Dalinys-Daliklis, dalinti(DalinysNaujas, Daliklis, DalmuoNaujas), Dalmuo is DalmuoNaujas+1.
