@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/LightsScene.unity
+- path: Assets/Scenes/INFOwINDOW.unity
   isLoaded: 1
   isActive: 1
