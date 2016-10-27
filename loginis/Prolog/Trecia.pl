@@ -7,7 +7,7 @@ trSuma(Sarasas, Suma):-
 	          sarasas(Sarasas, PirmasDemuo, LikutisPirmas),
 	          sarasas(LikutisPirmas, AntrasDemuo, LikutisAntras),
 		  sarasas(LikutisAntras, TreciasDemuo, _),
-		  PirmasDemuo + AntrasDemuo + TreciasDemuo =:= Suma;
+		  Suma is PirmasDemuo + AntrasDemuo + TreciasDemuo;
 		  sarasas(Sarasas, _, LikutisPirmas),
 		  trSuma(LikutisPirmas, Suma).
 /*-------Antra------------*/
@@ -21,13 +21,27 @@ string_to_list_of_characters(String, Characters) :-
 number_to_character(Number, Character) :-
     name(Character, [Number]).
 
+list_to_number([SarasoPradzia|SarasoLikutis], Skaicius):-
+	SkaiciusN is Skaicius * 10,
+	SkaiciusNN is SkaiciusN + SarasoPradzia,
+	list_to_number(SarasoLikutis, SkaiciusNN).
+
+
+
+	list_to_number([], _).
+
+des_skaic2(Sarasas, Skaicius):-
+	list_to_number(Sarasas, SarasoSkaicius),
+	SarasoSkaicius =:= Skaicius.
+
+
 des_skaic(Sarasas, Skaicius):-
 	string_to_list_of_characters(Skaicius, SkaiciausSarasas),
 	lygink(Sarasas, SkaiciausSarasas).
 
 lygink([PirmaPradzia|PirmasLikutis], [AntraPradzia|AntrasLikutis]):-
-	PirmaPradzia =:= AntraPradzia,
-	lygink(PirmasLikutis, AntrasLikutis).
+		lygink(PirmasLikutis, AntrasLikutis),
+		PirmaPradzia is AntraPradzia.
 
 lygink([],[]).
 /*-------Trecia-------------*/
@@ -36,7 +50,8 @@ lygink([],[]).
 pirmieji([PirmasPradzia|PirmasLikutis], Kiekis, [AntrasPradzia|AntrasLikutis]):-
                             KiekisN is Kiekis-1,
 			    KiekisN =:= 0,
-			    lygu(PirmasPradzia,AntrasPradzia);
+			    lygu(PirmasPradzia,AntrasPradzia),
+			    AntrasLikutis is  123;
 			    KiekisN is Kiekis-1,
 			    lygu(PirmasPradzia,AntrasPradzia),
 			    pirmieji(PirmasLikutis, KiekisN, AntrasLikutis).

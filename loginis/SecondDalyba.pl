@@ -3,4 +3,7 @@
 /*dalinti(6,3,X).*/
 
 dalinti(Dalinys, Dalinys, 1).
-dalinti(Dalinys, Daliklis, Dalmuo):- DalinysNaujas is Dalinys-Daliklis, dalinti(DalinysNaujas, Daliklis, DalmuoNaujas), Dalmuo is DalmuoNaujas+1.
+dalinti(Dalinys, Daliklis, Dalmuo):- DalinysNaujas is Dalinys-Daliklis,
+	DalinysNaujas > 0,
+	dalinti(DalinysNaujas, Daliklis, DalmuoNaujas),
+	Dalmuo is DalmuoNaujas+1.
