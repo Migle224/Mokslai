@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/INFOwINDOW.unity
+- path: Assets/Scenes/CallStackValue.unity
   isLoaded: 1
   isActive: 1
