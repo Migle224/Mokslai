@@ -13,37 +13,14 @@ trSuma(Sarasas, Suma):-
 /*-------Antra------------*/
 /*Skaicius Skaic atitinka duota dešimtainiu skaitmenu saraša Sar.
  des_skaic ([1,9,8,5],1985).*/
-string_to_list_of_characters(String, Characters) :-
-    name(String, Xs),
-    maplist( number_to_character,
-       Xs, Characters ).
-
-number_to_character(Number, Character) :-
-    name(Character, [Number]).
-
-list_to_number([SarasoPradzia|SarasoLikutis], Skaicius):-
-	SkaiciusN is Skaicius * 10,
-	SkaiciusNN is SkaiciusN + SarasoPradzia
-	list_to_number(SarasoLikutis, SkaiciusN).
+listToNumber([SarasoPradzia|SarasoPabaiga], Skaicius):-
+	listTonumber(SarasoPabaiga, ),
+	Suma is Temp.
+listToNumber([],X,Z):- Z is X.
 
 
 
-	list_to_number([], _).
 
-des_skaic2(Sarasas, Skaicius):-
-	list_to_number(Sarasas, SarasoSkaicius),
-	SarasoSkaicius =:= Skaicius.
-
-
-des_skaic(Sarasas, Skaicius):-
-	string_to_list_of_characters(Skaicius, SkaiciausSarasas),
-	lygink(Sarasas, SkaiciausSarasas).
-
-lygink([PirmaPradzia|PirmasLikutis], [AntraPradzia|AntrasLikutis]):-
-		lygink(PirmasLikutis, AntrasLikutis),
-		PirmaPradzia is AntraPradzia.
-
-lygink([],[]).
 /*-------Trecia-------------*/
 /*sarašas R - pirmuju duoto sarašo S   K elementu sarašas.
 	pirmieji([a,b,c,d,e],3,[a,b,c]).*/
