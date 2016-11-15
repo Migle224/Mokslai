@@ -25,7 +25,7 @@ public class LightsController : MonoBehaviour {
 
     public Material turnOnMaterial, turnOffMaterial, betweenMaterial, wrongLightMaterial;
 
-    public float animationTime = 0.01f;
+    public float animationTime = 0.1f;
 
     GameObject[] lights = new GameObject[16];
     // Use this for initialization
@@ -91,11 +91,6 @@ public class LightsController : MonoBehaviour {
 
     public void InitLights()
     {
-        StartCoroutine(InitLightsWithAnimation());
-    } 
-
-    IEnumerator InitLightsWithAnimation()
-    {
         int counter = 1;
         LightInformation lightInformation;
 
@@ -103,10 +98,6 @@ public class LightsController : MonoBehaviour {
         foreach (GameObject light in lights)
         {
             lightInformation = light.GetComponent<LightInformation>();
-
-            yield return new WaitForSeconds(animationTime);
-            lightInformation.setLight(false, betweenMaterial);
-            yield return new WaitForSeconds(animationTime);
 
             if (Random.value < 0.5)
             {
@@ -120,7 +111,7 @@ public class LightsController : MonoBehaviour {
 
             counter *= 2;
         }
-    }
+    } 
 
     public void ChangeLightState(int _position)
     {
@@ -138,34 +129,77 @@ public class LightsController : MonoBehaviour {
 
     }
 
-    public void ShowLightsResult(int _result)
+    public void ShowLightsResult(int _result, 
+                                GameObject _lightsResultIndicator, 
+                                GameObject _lightsFirstLine, 
+                                GameObject _lightsSecondLine,
+                                GameObject _lightsResult)
     {
-        StartCoroutine(ShowLightsResultWithAnimation(_result));
+        StartCoroutine(ShowLightsResultWithAnimation(_result, _lightsResultIndicator, _lightsFirstLine, _lightsSecondLine, _lightsResult));
     }
 
-    private IEnumerator ShowLightsResultWithAnimation(int _result)
+    private IEnumerator ShowLightsResultWithAnimation(int _result,
+                                GameObject _lightsResultIndicator,
+                                GameObject _lightsFirstLine,
+                                GameObject _lightsSecondLine,
+                                GameObject _lightsResult)
     {
         int lightsValueLocal    = _result;
         LightInformation lightInformation;
+        int nextLight = 0, firstLight = 0, secondLight = 0, lightsSum = 0;
 
-        foreach (GameObject light in lights)
+        lights = _lightsResult.GetComponent<LightsController>().Lights;
+
+
+        for (int i = 0; i < lights.Length; i++)
         {
-            lightInformation = light.GetComponent<LightInformation>();
+            lightInformation = lights[i].GetComponent<LightInformation>();
 
             yield return new WaitForSeconds(animationTime);
-            lightInformation.setLight(false, betweenMaterial);
+            //lightInformation.setLight(false, betweenMaterial);
+            _lightsResultIndicator.gameObject.transform.position = new Vector3(lights[i].gameObject.transform.position.x + lights[i].gameObject.GetComponent<Renderer>().bounds.size.x/2,
+                                                                                _lightsResultIndicator.gameObject.transform.position.y,
+                                                                                _lightsResultIndicator.gameObject.transform.position.z);
             yield return new WaitForSeconds(animationTime);
 
-            if (lightsValueLocal % 2 == 1)
-                lightInformation.setLight(true, turnOnMaterial);
-            else
-                lightInformation.setLight(false, turnOffMaterial);
-            lightsValueLocal = lightsValueLocal / 2;
+            firstLight = (_lightsFirstLine.gameObject.GetComponent<LightsController>().lights[i].GetComponent<LightInformation>().State == true)? 1: 0;
+            secondLight = (_lightsSecondLine.gameObject.GetComponent<LightsController>().lights[i].GetComponent<LightInformation>().State == true) ? 1 : 0;
+
+            lightsSum = nextLight + firstLight + secondLight;
+
+            switch (lightsSum)
+            {
+                case 0:
+                    lightInformation.setLight(false, turnOffMaterial);
+                    break;
+                case 1:
+                    lightInformation.setLight(true, turnOnMaterial);
+                    nextLight = 0;
+                    break;
+                case 2:
+                    lightInformation.setLight(false, turnOffMaterial);
+                    nextLight = 1;
+                    if (i + 1 < lights.Length)
+                        lights[i+1].GetComponent<LightInformation>().setLight(true, turnOnMaterial);
+                    break;
+                case 3:
+                    lightInformation.setLight(true, turnOnMaterial);
+                    nextLight = 1;
+                    if(i+1 < lights.Length)
+                        lights[i + 1].GetComponent<LightInformation>().setLight(true, turnOnMaterial);
+                    break;
+            }
+
+            /*  if (lightsValueLocal % 2 == 1)
+                  lightInformation.setLight(true, turnOnMaterial);
+              else
+                  lightInformation.setLight(false, turnOffMaterial);
+              lightsValueLocal = lightsValueLocal / 2;*/
         }
 
     }
 
-    void CalculateLightsValue()
+    public int CalculateLightsValue()
     {
         int counter = 1;
         int sum     = 0;
@@ -177,7 +211,9 @@ public class LightsController : MonoBehaviour {
             counter *= 2;
         }
 
-        this.lightsValue = sum; 
+        this.lightsValue = sum;
+
+        return this.lightsValue;
 
     }
 
