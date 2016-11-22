@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/SFregisterCalculation.unity
+- path: Assets/Scenes/highScore.unity
   isLoaded: 1
   isActive: 1

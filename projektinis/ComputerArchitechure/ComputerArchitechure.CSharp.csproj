@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\MemoryRegistersController.cs" />
+    <Compile Include="Assets\ScoreController.cs" />
     <Compile Include="Assets\Scripts\LightsAddition\ButtonLightInformation.cs" />
     <Compile Include="Assets\Scripts\LightsAddition\ButtonsLightsController.cs" />
     <Compile Include="Assets\Scripts\LightsAddition\CheckButtonController.cs" />
