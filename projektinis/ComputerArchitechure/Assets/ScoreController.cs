@@ -9,18 +9,19 @@ public class ScoreController : MonoBehaviour {
     public string[] items, itemsd;
     public enum TrainingType
     {
-        Training    = 0,
-        Time        = 1
+        Training    = 1,
+        Time        = 2
     };
 
     public enum TaskType
     {
-        LightsAddition  = 0,
-        MemoryStackCall = 1,
+        LightsAddition  = 1,
+        MemoryStackCall = 3,
         SFRegister      = 2
     };
 
     public GameObject scoreInfoPrefab;
+    public GameObject infoHeader;
 
     string[][] scoreInfoDetails;
 
@@ -33,21 +34,26 @@ public class ScoreController : MonoBehaviour {
     TaskType tasktype;
     TrainingType trainingType;
     string username;
+    float textPositionDiference = 20;
 
 
     IEnumerator Start()
     {
         
         WWW itemsData = new WWW("localhost/computerarchitecture/highscoreData.php");
+        Transform prefabPosition = infoHeader.gameObject.transform;
         yield return itemsData;
         string itemsDataString = itemsData.text;
+
+       // prefabPosition.transform.position = (infoHeader.transform.position);
         itemsDataString = itemsDataString.Replace("<br>", "");
         print(itemsDataString);
         items = itemsDataString.Split('|');
         foreach (string item in items)
         {
             itemsd = item.Split(';');
-            scoreInfo = (GameObject)Instantiate(scoreInfoPrefab, this.gameObject.transform);
+            scoreInfo = (GameObject)Instantiate(scoreInfoPrefab, prefabPosition);
+            prefabPosition.position = new Vector3(0, prefabPosition.position.y - textPositionDiference, prefabPosition.position.z);
 
             for (int i = 0; i < itemsd.Length; i++)
             {
