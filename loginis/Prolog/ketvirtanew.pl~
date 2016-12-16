@@ -25,9 +25,9 @@ solve(_, Target, Target, []) :-
     !.
 solve(S, Target, Current, [Move|Ms]) :-
     add_to_seen(S, Current),
-    setof(Dist-M-Update,
-          (  get_move(Current, P, M),
-         apply_move(Current, P, M, Update),
+    setof(Dist-MoveStep-Update,
+          (  get_move(Current, Position, MoveStep),
+         apply_move(Current, Position, MoveStep, Update),
          distance(Target, Update, Dist)
           ), Moves),
     member(_-Move-U, Moves),
@@ -50,9 +50,9 @@ get_move(Board, Position, Q) :-
 %
 %   swap elements at position P and M
 %
-apply_move(Current, P, M, Update) :-
-    assertion(nth0(P, Current, 0)), % constrain to this application usage
-    ( P > M -> (F,S) = (M,P) ; (F,S) = (P,M) ),
+apply_move(Current, Position, Move, Update) :-
+    assertion(nth0(Position, Current, 0)), % constrain to this application usage
+    ( Position > Move -> (F,S) = (Move,Position) ; (F,S) = (Position,Move) ),
     nth0(S, Current, Sv, A),
     nth0(F, A, Fv, B),
     nth0(F, C, Sv, B),
@@ -73,9 +73,9 @@ coord(Position, Row, Column) :-
 %
 distance(Current, Target, Dist) :-
     aggregate_all(sum(D),
-              (   nth0(P, Current, N), coord(P, Rp, Cp),
+              (   nth0(Position, Current, N), coord(Position, Rowp, Columnp),
               nth0(Q, Target, N), coord(Q, Rq, Cq),
-              D is abs(Rp - Rq) + abs(Cp - Cq)
+              D is abs(Rowp - Rq) + abs(Columnp - Cq)
               ), Dist).
 
 %%  add_to_seen(+S, +Current)
@@ -108,7 +108,7 @@ show_solution(P, [M|Ms]) :-
 target(  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,0]).
 
 start(0, [1,2,3,4,5,6,7,8,9,10,11,12,0,13,14,15]).
-start(1, [1,2,3,4,5,6,7,8,0,10,11,12,9,13,14,15]).
+start(1, [1,2,3,4,5,6,7,8,0,11,10,12,9,13,14,15]).
 
 test(0) :- runtest(0).
 test(1) :- runtest(1).
