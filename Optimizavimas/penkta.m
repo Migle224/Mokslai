@@ -104,5 +104,4 @@ delta = 0.0001;
 
 [xm, ym, stepsm, functionsCalledm]  = HukeJive(Xmt, i, alpha, delta)
 
-[xm, ym, stepsm, functionsCalledm]  = HukeJive(Xm1, i, alpha, delta)
 

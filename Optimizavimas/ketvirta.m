@@ -10,13 +10,13 @@ function [Y] = search(X0, i)
   y0 = goal(X0(1), X0(2), X0(3));
   x1 = [(X0(1)+i(1)), X0(2), X0(3)];
   y1 = goal(x1(1), x1(2), x1(3));
-  if y1 > y0
+  if y1 >= y0
     x2 = [x1(1), (X0(2)+ i(2)), x1(3)];
     y2 = goal(x2(1), x2(2), x2(3));
-    if y2 > y1
+    if y2 >= y1
       x3 = [x2(1),x2(2),(x2(3)+i(3))];
       y3 = goal(x3(1), x3(2), x3(3));
-      if y3 > y2
+      if y3 >= y2
         Y = x3;
       else
         Y = x2;
@@ -24,7 +24,7 @@ function [Y] = search(X0, i)
     else
       x3 = [x2(1),x1(2),(x2(3)+i(3))];
       y3 = goal(x3(1), x3(2), x3(3));  
-      if y3 > y1
+      if y3 >= y1
         Y = x3;
       else
         Y = x1;
@@ -33,10 +33,10 @@ function [Y] = search(X0, i)
   else
     x2 = [X0(1), (X0(2)+ i(2)), X0(3)];
     y2 = goal(x2(1), x2(2), x2(3));
-    if y2 > y0
+    if y2 >= y0
       x3 = [x2(1),x2(2),(x2(3)+i(3))];
       y3 = goal(x3(1), x3(2), x3(3));
-      if y3 > y2
+      if y3 >= y2
         Y = x3;
       else
         Y = x2;
@@ -44,7 +44,7 @@ function [Y] = search(X0, i)
     else
       x3 = [X0(1),X0(2),(X0(3)+i(3))];
       y3 = goal(x3(1), x3(2), x3(3));
-      if y3 > y0
+      if y3 >= y0
         Y = x3;
       else
         Y = X0;
@@ -91,11 +91,11 @@ Xm = goal(0.5, 0.2, 0.1);
 X0t = [0,0,0];
 X1t = [1,1,1];
 Xmt = [0.5, 0.2, 0.1];
-Xm1 = [0.1, 0.1, 0.1];
 
-i = [0.01, 0.01, 0.01];
+
+i = [0.00001, 0.00001, 0.00001];
 alpha = 2;
-delta = 0.001;
+delta = 0.000001;
 
 
 [x0, y0, steps0, functionsCalled0]  = HukeJive(X0t, i, alpha, delta)
@@ -103,6 +103,4 @@ delta = 0.001;
 [x1, y1, steps1, functionsCalled1]  = HukeJive(X1t, i, alpha, delta)
 
 [xm, ym, stepsm, functionsCalledm]  = HukeJive(Xmt, i, alpha, delta)
-
-[xm, ym, stepsm, functionsCalledm]  = HukeJive(Xm1, i, alpha, delta)
 
