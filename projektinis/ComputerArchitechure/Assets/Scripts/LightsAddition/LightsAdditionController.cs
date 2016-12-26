@@ -14,7 +14,7 @@ public class LightsAdditionController : MonoBehaviour {
     public void CheckResults()
     {
         int sum = lightsFirstLine.GetComponent<LightsController>().LightsValue + lightsSecondLine.GetComponent<LightsController>().LightsValue;
-        lightsResult.GetComponent<LightsController>().ShowLightsResult(sum, lightsResultIndicator, lightsFirstLine, lightsSecondLine, lightsResult);
+        lightsResult.GetComponent<LightsController>().ShowLightsResult(sum, lightsResultIndicator, lightsFirstLine, lightsSecondLine, lightsUserInput);
 
         if (!userInformationLightController.timeIsOver())
         {

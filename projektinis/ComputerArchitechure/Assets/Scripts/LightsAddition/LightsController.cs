@@ -20,12 +20,14 @@ public class LightsController : MonoBehaviour {
     public GameObject light0, light1, light2, light3, light4, light5, light6, light7,
                         light8, light9, light10, light11, light12, light13, light14, light15;
 
+    public bool isAnswerCorrect;
 
     private int lightsValue;
 
     public Material turnOnMaterial, turnOffMaterial, betweenMaterial, wrongLightMaterial;
 
     public float animationTime = 0.1f;
+
 
     GameObject[] lights = new GameObject[16];
     // Use this for initialization
@@ -133,23 +135,25 @@ public class LightsController : MonoBehaviour {
                                 GameObject _lightsResultIndicator, 
                                 GameObject _lightsFirstLine, 
                                 GameObject _lightsSecondLine,
-                                GameObject _lightsResult)
+                                GameObject _lightsUserInput)
     {
-        StartCoroutine(ShowLightsResultWithAnimation(_result, _lightsResultIndicator, _lightsFirstLine, _lightsSecondLine, _lightsResult));
+        StartCoroutine(ShowLightsResultWithAnimation(_result, _lightsResultIndicator, _lightsFirstLine, _lightsSecondLine, _lightsUserInput));
     }
 
     private IEnumerator ShowLightsResultWithAnimation(int _result,
                                 GameObject _lightsResultIndicator,
                                 GameObject _lightsFirstLine,
                                 GameObject _lightsSecondLine,
-                                GameObject _lightsResult)
+                                GameObject _lightsUserInput)
     {
         int lightsValueLocal    = _result;
         LightInformation lightInformation;
         int nextLight = 0, firstLight = 0, secondLight = 0, lightsSum = 0;
+        GameObject[] userLights = _lightsUserInput.GetComponent<LightsController>().Lights;
 
-        lights = _lightsResult.GetComponent<LightsController>().Lights;
-
+        isAnswerCorrect = true;
+        // lights = _lightsResult.GetComponent<LightsController>().Lights;
+        lights = this.Lights;
 
         for (int i = 0; i < lights.Length; i++)
         {
@@ -157,12 +161,12 @@ public class LightsController : MonoBehaviour {
 
             yield return new WaitForSeconds(animationTime);
             //lightInformation.setLight(false, betweenMaterial);
-            _lightsResultIndicator.gameObject.transform.position = new Vector3(lights[i].gameObject.transform.position.x + lights[i].gameObject.GetComponent<Renderer>().bounds.size.x/2,
+            _lightsResultIndicator.gameObject.transform.position = new Vector3(lights[i].gameObject.transform.position.x + lights[i].gameObject.GetComponent<Renderer>().bounds.size.x / 2,
                                                                                 _lightsResultIndicator.gameObject.transform.position.y,
                                                                                 _lightsResultIndicator.gameObject.transform.position.z);
             yield return new WaitForSeconds(animationTime);
 
-            firstLight = (_lightsFirstLine.gameObject.GetComponent<LightsController>().lights[i].GetComponent<LightInformation>().State == true)? 1: 0;
+            firstLight = (_lightsFirstLine.gameObject.GetComponent<LightsController>().lights[i].GetComponent<LightInformation>().State == true) ? 1 : 0;
             secondLight = (_lightsSecondLine.gameObject.GetComponent<LightsController>().lights[i].GetComponent<LightInformation>().State == true) ? 1 : 0;
 
             lightsSum = nextLight + firstLight + secondLight;
@@ -180,23 +184,22 @@ public class LightsController : MonoBehaviour {
                     lightInformation.setLight(false, turnOffMaterial);
                     nextLight = 1;
                     if (i + 1 < lights.Length)
-                        lights[i+1].GetComponent<LightInformation>().setLight(true, turnOnMaterial);
+                        lights[i + 1].GetComponent<LightInformation>().setLight(true, turnOnMaterial);
                     break;
                 case 3:
                     lightInformation.setLight(true, turnOnMaterial);
                     nextLight = 1;
-                    if(i+1 < lights.Length)
+                    if (i + 1 < lights.Length)
                         lights[i + 1].GetComponent<LightInformation>().setLight(true, turnOnMaterial);
                     break;
             }
-
-            /*  if (lightsValueLocal % 2 == 1)
-                  lightInformation.setLight(true, turnOnMaterial);
-              else
-                  lightInformation.setLight(false, turnOffMaterial);
-              lightsValueLocal = lightsValueLocal / 2;*/
+            if (userLights[i].GetComponent<LightInformation>().State != lightInformation.State)
+            { 
+                userLights[i].GetComponent<LightInformation>().setLight(false, wrongLightMaterial);
+                this.isAnswerCorrect = false;
+            }
         }
-
+        
     }
 
     public int CalculateLightsValue()
