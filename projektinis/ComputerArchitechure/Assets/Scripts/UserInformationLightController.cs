@@ -74,7 +74,8 @@ public class UserInformationLightController : MonoBehaviour
         CheckButtonController.timeIsOver = false;
         ButtonLightInformation.timeIsOver = false;
 
-        ScoreController.GetNextId();
+        ScoreController sc = new ScoreController();
+        sc.GetNextId();
      /*   WWWForm form = new WWWForm();
 
         form.AddField("datePost", System.DateTime.Now.ToShortDateString());
