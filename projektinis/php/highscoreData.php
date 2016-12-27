@@ -11,7 +11,7 @@
 		die("Connection Failed. ". mysqli_connect_error());
 	}
 	
-	$sql = "SELECT Date, ID, Score, TasksDone, TasksDoneRight, TaskType, Time, TrainingType, UserName FROM highscore";
+	$sql = "SELECT Date, ID, Score, TasksDone, TasksDoneRight, TaskType, Time, TrainingType, UserName FROM highscore ORDER BY Score ASC";
 	$result = mysqli_query($conn ,$sql);
 	
 	

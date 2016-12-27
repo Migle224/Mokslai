@@ -4,6 +4,7 @@ using System.Collections;
 public class ButtonLightInformation : MonoBehaviour {
 
     private int position;
+    static public bool timeIsOver = false;
 
     public int Position
     {
@@ -13,6 +14,7 @@ public class ButtonLightInformation : MonoBehaviour {
 
     void OnMouseDown()
     {
-        this.gameObject.transform.parent.gameObject.GetComponent<ButtonsLightsController>().ButtonPress(this.position);
+        if (!timeIsOver)
+            this.gameObject.transform.parent.gameObject.GetComponent<ButtonsLightsController>().ButtonPress(this.position);
     }
 }

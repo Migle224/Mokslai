@@ -66,8 +66,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CheckSFTask.cs" />
-    <Compile Include="Assets\SFRegisterController.cs" />
+    <Compile Include="Assets\Scripts\CheckSFTask.cs" />
+    <Compile Include="Assets\Scripts\LevelButtonController.cs" />
     <Compile Include="Assets\Scripts\LightsAddition\ButtonLightInformation.cs" />
     <Compile Include="Assets\Scripts\LightsAddition\ButtonsLightsController.cs" />
     <Compile Include="Assets\Scripts\LightsAddition\CheckButtonController.cs" />
@@ -77,6 +77,7 @@
     <Compile Include="Assets\Scripts\LightsAddition\ResetButtonController.cs" />
     <Compile Include="Assets\Scripts\MemoryRegistersController.cs" />
     <Compile Include="Assets\Scripts\MemoryScrollViewController.cs" />
+    <Compile Include="Assets\Scripts\SFRegisterController.cs" />
     <Compile Include="Assets\Scripts\ScoreController.cs" />
     <Compile Include="Assets\Scripts\UserInformationLightController.cs" />
   </ItemGroup>

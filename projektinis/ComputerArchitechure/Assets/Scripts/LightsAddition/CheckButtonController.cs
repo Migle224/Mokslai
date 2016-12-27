@@ -3,8 +3,11 @@ using System.Collections;
 
 public class CheckButtonController : MonoBehaviour {
 
+    static public bool timeIsOver = false;
+
     void OnMouseDown()
     {
-        this.gameObject.transform.parent.gameObject.GetComponent<LightsAdditionController>().CheckResults();
+        if (!timeIsOver)
+            this.gameObject.transform.parent.gameObject.GetComponent<LightsAdditionController>().CheckResults();
     }
 }
