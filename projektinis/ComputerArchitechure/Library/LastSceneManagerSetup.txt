@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/LightsScene.unity
+- path: Assets/Scenes/SFregisterCalculation.unity
   isLoaded: 1
   isActive: 1

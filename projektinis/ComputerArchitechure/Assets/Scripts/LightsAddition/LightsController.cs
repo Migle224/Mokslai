@@ -31,7 +31,7 @@ public class LightsController : MonoBehaviour {
 
     GameObject[] lights = new GameObject[16];
     // Use this for initialization
-    void Start() {
+    void Awake() {
         this.AssignLights();
 
         switch (controllerType)
@@ -91,6 +91,25 @@ public class LightsController : MonoBehaviour {
 
     }
 
+    public void InitLightsWithMistakes(int _lightValue)
+    {
+
+        this.LightsValue = _lightValue % (int)Mathf.Pow(2, 16);
+        int lightsValue = this.LightsValue;
+
+        for (int i = this.Lights.Length-1; i >=0; i--)
+        {
+            if (lightsValue >= Mathf.Pow(2, i))
+            {
+                if (true != this.Lights[i].GetComponent<LightInformation>().State)
+                    this.Lights[i].GetComponent<LightInformation>().setLight(true, wrongLightMaterial);  
+                lightsValue -= (int)Mathf.Pow(2, i);                
+            }
+            else
+                if (false != this.Lights[i].GetComponent<LightInformation>().State)
+                this.Lights[i].GetComponent<LightInformation>().setLight(false, wrongLightMaterial);
+        }
+    }
     public void InitLights()
     {
         int counter = 1;
