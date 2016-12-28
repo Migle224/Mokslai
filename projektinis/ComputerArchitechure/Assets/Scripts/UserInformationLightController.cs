@@ -20,7 +20,7 @@ public class UserInformationLightController : MonoBehaviour
     void Start()
     {
         timeLeft = timeForTask;
-        timeIsOverText.active = false;
+        timeIsOverText.SetActive(false);
         Invoke("EndLevel", timeForTask);
     }
 
@@ -65,7 +65,7 @@ public class UserInformationLightController : MonoBehaviour
         CheckButtonController.timeIsOver = true;
         ButtonLightInformation.timeIsOver = true;
 
-        timeIsOverText.active = true;
+        timeIsOverText.SetActive(true);
     }
 
     public void SaveLevelInformation()
@@ -75,7 +75,9 @@ public class UserInformationLightController : MonoBehaviour
         ButtonLightInformation.timeIsOver = false;
 
         ScoreController sc = new ScoreController();
-        sc.GetNextId();
+        
+        Application.LoadLevel("LevelsScene");
+       // sc.GetNextId();
      /*   WWWForm form = new WWWForm();
 
         form.AddField("datePost", System.DateTime.Now.ToShortDateString());
