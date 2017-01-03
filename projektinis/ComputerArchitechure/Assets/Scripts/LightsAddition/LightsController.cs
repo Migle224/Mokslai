@@ -15,6 +15,8 @@ public class LightsController : MonoBehaviour {
 
     }
 
+    private IEnumerator coroutine;
+
     public ControllerType controllerType;
 
     public GameObject light0, light1, light2, light3, light4, light5, light6, light7,
@@ -24,7 +26,7 @@ public class LightsController : MonoBehaviour {
 
     private int lightsValue;
 
-    public Material turnOnMaterial, turnOffMaterial, betweenMaterial, wrongLightMaterial;
+    public Material turnOnMaterial, turnOffMaterial, wrongTurnOff, wrongTurnOn;
 
     public float animationTime = 0.1f;
 
@@ -74,7 +76,7 @@ public class LightsController : MonoBehaviour {
             lastState = lightInformation.State;
             Debug.Log( lightInformationResult.State + " " + counter);
             yield return new WaitForSeconds(animationTime);
-            lightInformation.setLight(false, betweenMaterial);
+            //lightInformation.setLight(false, betweenMaterial);
             yield return new WaitForSeconds(animationTime);
 
             if (lightInformation.State == lightInformationResult.State)
@@ -83,7 +85,10 @@ public class LightsController : MonoBehaviour {
             }
             else
             {
-                lightInformation.setLight(lastState, wrongLightMaterial);
+                if(lastState)
+                    lightInformation.setLight(lastState, wrongTurnOn);
+                else
+                    lightInformation.setLight(lastState, wrongTurnOff);
             }
            
             counter++;
@@ -102,12 +107,12 @@ public class LightsController : MonoBehaviour {
             if (lightsValue >= Mathf.Pow(2, i))
             {
                 if (true != this.Lights[i].GetComponent<LightInformation>().State)
-                    this.Lights[i].GetComponent<LightInformation>().setLight(true, wrongLightMaterial);  
+                    this.Lights[i].GetComponent<LightInformation>().setLight(true, wrongTurnOff);  
                 lightsValue -= (int)Mathf.Pow(2, i);                
             }
             else
                 if (false != this.Lights[i].GetComponent<LightInformation>().State)
-                this.Lights[i].GetComponent<LightInformation>().setLight(false, wrongLightMaterial);
+                this.Lights[i].GetComponent<LightInformation>().setLight(false, wrongTurnOn);
         }
     }
     public void InitLights()
@@ -150,15 +155,89 @@ public class LightsController : MonoBehaviour {
 
     }
 
+    public void StopCoroutineResult(int _result,
+                                GameObject _lightsResultIndicator,
+                                GameObject _lightsFirstLine,
+                                GameObject _lightsSecondLine,
+                                GameObject _lightsUserInput)
+    {
+        StopCoroutine(coroutine);
+        ShowLightsResultWithoutAnimation(_result, _lightsResultIndicator, _lightsFirstLine, _lightsSecondLine, _lightsUserInput);
+    }
+
     public void ShowLightsResult(int _result, 
                                 GameObject _lightsResultIndicator, 
                                 GameObject _lightsFirstLine, 
                                 GameObject _lightsSecondLine,
                                 GameObject _lightsUserInput)
     {
-        StartCoroutine(ShowLightsResultWithAnimation(_result, _lightsResultIndicator, _lightsFirstLine, _lightsSecondLine, _lightsUserInput));
+        coroutine = ShowLightsResultWithAnimation(_result, _lightsResultIndicator, _lightsFirstLine, _lightsSecondLine, _lightsUserInput);
+        StartCoroutine(coroutine);
     }
+    private void ShowLightsResultWithoutAnimation(int _result,
+                                GameObject _lightsResultIndicator,
+                                GameObject _lightsFirstLine,
+                                GameObject _lightsSecondLine,
+                                GameObject _lightsUserInput)
+    {
+        int lightsValueLocal = _result;
+        LightInformation lightInformation;
+        int nextLight = 0, firstLight = 0, secondLight = 0, lightsSum = 0;
+        GameObject[] userLights = _lightsUserInput.GetComponent<LightsController>().Lights;
 
+        isAnswerCorrect = true;
+        // lights = _lightsResult.GetComponent<LightsController>().Lights;
+        lights = this.Lights;
+
+        for (int i = 0; i < lights.Length; i++)
+        {
+            lightInformation = lights[i].GetComponent<LightInformation>();
+
+           // yield return new WaitForSeconds(animationTime);
+            //lightInformation.setLight(false, betweenMaterial);
+            _lightsResultIndicator.gameObject.transform.position = new Vector3(lights[i].gameObject.transform.position.x + lights[i].gameObject.GetComponent<Renderer>().bounds.size.x / 2,
+                                                                                _lightsResultIndicator.gameObject.transform.position.y,
+                                                                                _lightsResultIndicator.gameObject.transform.position.z);
+          //  yield return new WaitForSeconds(animationTime);
+
+            firstLight = (_lightsFirstLine.gameObject.GetComponent<LightsController>().lights[i].GetComponent<LightInformation>().State == true) ? 1 : 0;
+            secondLight = (_lightsSecondLine.gameObject.GetComponent<LightsController>().lights[i].GetComponent<LightInformation>().State == true) ? 1 : 0;
+
+            lightsSum = nextLight + firstLight + secondLight;
+
+            switch (lightsSum)
+            {
+                case 0:
+                    lightInformation.setLight(false, turnOffMaterial);
+                    break;
+                case 1:
+                    lightInformation.setLight(true, turnOnMaterial);
+                    nextLight = 0;
+                    break;
+                case 2:
+                    lightInformation.setLight(false, turnOffMaterial);
+                    nextLight = 1;
+                    if (i + 1 < lights.Length)
+                        lights[i + 1].GetComponent<LightInformation>().setLight(true, turnOnMaterial);
+                    break;
+                case 3:
+                    lightInformation.setLight(true, turnOnMaterial);
+                    nextLight = 1;
+                    if (i + 1 < lights.Length)
+                        lights[i + 1].GetComponent<LightInformation>().setLight(true, turnOnMaterial);
+                    break;
+            }
+            if (userLights[i].GetComponent<LightInformation>().State != lightInformation.State)
+            {
+                if (userLights[i].GetComponent<LightInformation>().State)
+                    userLights[i].GetComponent<LightInformation>().setLight(false, wrongTurnOn);
+                else
+                    userLights[i].GetComponent<LightInformation>().setLight(false, wrongTurnOff);
+                this.isAnswerCorrect = false;
+            }
+        }
+
+    }
     private IEnumerator ShowLightsResultWithAnimation(int _result,
                                 GameObject _lightsResultIndicator,
                                 GameObject _lightsFirstLine,
@@ -213,8 +292,10 @@ public class LightsController : MonoBehaviour {
                     break;
             }
             if (userLights[i].GetComponent<LightInformation>().State != lightInformation.State)
-            { 
-                userLights[i].GetComponent<LightInformation>().setLight(false, wrongLightMaterial);
+            {   if(userLights[i].GetComponent<LightInformation>().State)
+                    userLights[i].GetComponent<LightInformation>().setLight(false, wrongTurnOn);
+                else
+                    userLights[i].GetComponent<LightInformation>().setLight(false, wrongTurnOff);
                 this.isAnswerCorrect = false;
             }
         }

@@ -11,6 +11,15 @@ public class LightsAdditionController : MonoBehaviour {
         userInformationLightController = userInformation.GetComponent<UserInformationLightController>();
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        { 
+            int sum = lightsFirstLine.GetComponent<LightsController>().LightsValue + lightsSecondLine.GetComponent<LightsController>().LightsValue;
+            lightsResult.GetComponent<LightsController>().StopCoroutineResult(sum, lightsResultIndicator, lightsFirstLine, lightsSecondLine, lightsUserInput);
+        }
+}
+
     public void CheckResults()
     {
         int sum = lightsFirstLine.GetComponent<LightsController>().LightsValue + lightsSecondLine.GetComponent<LightsController>().LightsValue;

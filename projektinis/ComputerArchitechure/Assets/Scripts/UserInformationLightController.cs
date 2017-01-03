@@ -11,14 +11,36 @@ public class UserInformationLightController : MonoBehaviour
     public Text timeLeftText, scoreText, tasksDoneText, tasksDoneRightText;
     string timeLeftString = "Time left: ", scoreTextString = "Score: ", tasksDoneString = "Tasks done: ", tasksDoneRightString = "Task done right: ";
     int tasksDone = 0, tasksDoneRight = 0;
+    
 
-    public int taskType, trainingType;
+
+   /* public enum TrainingType
+    {
+        Training = 1,
+        Time = 2
+    };
+
+    public enum TaskType
+    {
+        LightsAddition = 1,
+        MemoryStackCall = 3,
+        SFRegister = 2
+    };*/
+
+    public ScoreController.TrainingType trainingType;
+
+    public ScoreController.TaskType taskType;
 
     public GameObject timeIsOverText;
+
+    public Text userName, timeOverText;
 
     // Use this for initialization
     void Start()
     {
+        tasksDoneRightText.text = tasksDoneRightString + "0";
+        tasksDoneText.text = tasksDoneString + "0";
+        scoreText.text = scoreTextString + "0";
         timeLeft = timeForTask;
         timeIsOverText.SetActive(false);
         Invoke("EndLevel", timeForTask);
@@ -33,13 +55,17 @@ public class UserInformationLightController : MonoBehaviour
             if (timeLeft >= 0)
                 timeLeftText.text = timeLeftString + timeLeft.ToString("F1");
             else
+            {
                 timeLeftText.text = timeLeftString + "0";
+                timeOverText.text += score;
+            }
         }
     }
 
     public void addTaskDone()
     {
         tasksDoneText.text = tasksDoneString + ++tasksDone;
+        this.calcScores();
     }
 
     public void addTaskDoneRight()
@@ -50,7 +76,7 @@ public class UserInformationLightController : MonoBehaviour
 
     void calcScores()
     {
-        score = (timeForTask * tasksDoneRight) / (tasksDone * tasksDone) ;
+        score = (int)(timeForTask * tasksDoneRight * 1000 / tasksDone) ;
         scoreText.text = scoreTextString + score;
     }
 
@@ -74,22 +100,11 @@ public class UserInformationLightController : MonoBehaviour
         CheckButtonController.timeIsOver = false;
         ButtonLightInformation.timeIsOver = false;
 
-        ScoreController sc = new ScoreController();
+        ScoreController.InsertHighScore(System.DateTime.Now, score, tasksDone, tasksDoneRight, taskType, timeForTask, trainingType, 
+            userName.text);
         
-        Application.LoadLevel("LevelsScene");
-       // sc.GetNextId();
-     /*   WWWForm form = new WWWForm();
+        Application.LoadLevel("HighScore");
+        
 
-        form.AddField("datePost", System.DateTime.Now.ToShortDateString());
-        form.AddField("iDPost", _ID);
-        form.AddField("scorePost", score.ToString());
-        form.AddField("tasksDonePost", tasksDone);
-        form.AddField("tasksDoneRightPost", tasksDoneRight);
-        form.AddField("taskTypePost", taskType.ToString());
-        form.AddField("timePost", timeForTask.ToString());
-        form.AddField("trainingTypePost", trainingType.ToString());
-        form.AddField("userNamePost", _userName);
-
-        WWW itemsData = new WWW("localhost/computerarchitecture/highscoreInsert.php", form);*/
     }
 }

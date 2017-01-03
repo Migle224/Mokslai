@@ -48,9 +48,9 @@ public class ScoreController : MonoBehaviour {
 
        
         itemsDataString = itemsDataString.Replace("<br>", "");
-        print(itemsDataString);
+       // print(itemsDataString);
         items = itemsDataString.Split('|');
-        for (int j = 0; j< 11; j++)
+        for (int j = 0; j < 10; j++)
         {
             itemsd = items[j].Split(';');
             scoreInfo = (GameObject)Instantiate(scoreInfoPrefab, prefabPosition);
@@ -70,8 +70,8 @@ public class ScoreController : MonoBehaviour {
     public  IEnumerator GetNextId()
     {
 
-        WWW itemsData = new WWW("localhost/computerarchitecture/highscoreData.php");
-        
+        WWW itemsData = new WWW("http://uosis.mif.vu.lt/~mipu1566/highscoreData.php");
+
         yield return itemsData;
         string itemsDataString = itemsData.text;
 
@@ -82,14 +82,14 @@ public class ScoreController : MonoBehaviour {
     }
 
 
-    static public void  InsertHighScore(DateTime _date,int _ID,float _score, int _tasksDone,
+    static public void  InsertHighScore(DateTime _date,float _score, int _tasksDone,
                                  int _tasksDoneRight, TaskType  _taskType, float _time, 
                                  TrainingType _trainingType, string _userName)
     {
         WWWForm form = new WWWForm();
 
         form.AddField("datePost", _date.ToShortDateString());
-        form.AddField("iDPost", _ID);
+        form.AddField("iDPost", 0); // TODO get new ID
         form.AddField("scorePost", _score.ToString());
         form.AddField("tasksDonePost", _tasksDone);
         form.AddField("tasksDoneRightPost", _tasksDoneRight);
@@ -98,7 +98,7 @@ public class ScoreController : MonoBehaviour {
         form.AddField("trainingTypePost", _trainingType.ToString());
         form.AddField("userNamePost", _userName);
 
-        WWW itemsData = new WWW("localhost/computerarchitecture/highscoreInsert.php", form);
+        WWW itemsData = new WWW("http://uosis.mif.vu.lt/~mipu1566/highscoreInsert.php", form);
 
         
     }

@@ -9,14 +9,15 @@ public class MemoryRegistersController : MonoBehaviour {
 
     public Text codeSegmentMainLine, codeSegmentUpLine, codeSegmentDownLine;
 
-    public GameObject memoryController;
+    public GameObject memoryController, userInformation;
 
+    UserInformationLightController userInformationLightController;
     MemoryScrollViewController memoryScrollViewController;
 
     int ipDecValue, ipNewDecValue, spDecValue;
     // Use this for initialization
     void Start () {
-
+        userInformationLightController = userInformation.GetComponent<UserInformationLightController>();
         memoryScrollViewController = memoryController.GetComponent<MemoryScrollViewController>();
 
         this.InitTask();
@@ -28,6 +29,7 @@ public class MemoryRegistersController : MonoBehaviour {
         if ((ipNewDecValue % 256).ToString("X") == memoryScrollViewController.GetInput())
         {
             memoryScrollViewController.SetInputColor(true);
+            userInformationLightController.addTaskDoneRight();
         }
         else
             memoryScrollViewController.SetInputColor(false);
@@ -74,6 +76,8 @@ public class MemoryRegistersController : MonoBehaviour {
         codeSegmentDownLine.text = (ipDecValue + 8).ToString("X") + ": ?? ?? ?? ?? ?? ?? ?? ??";
 
         memoryScrollViewController.initTask(spDecValue);
+
+        userInformationLightController.addTaskDone();
 
     }
 }

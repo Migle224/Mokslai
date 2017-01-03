@@ -15,17 +15,21 @@ public class SFRegisterController : MonoBehaviour
     const int DIRECTION_FALG = 10;
     const int OVERFLOW_FALG =11;
 
-    public GameObject lightsFirstLine, lightsSecondLine, lightsResult, lightsUserInput;
+    public GameObject lightsFirstLine, lightsSecondLine, lightsResult, lightsUserInput, userInformation;
     int firstNumber, secondNumber, linesSum;
     public Text taskText;
-    public int numberInPower = 9;
+    public int numberInPower = 7;
+    UserInformationLightController userInformationLightController;
 
-    public Material turnOnMaterial, turnOffMaterial, betweenMaterial, wrongLightMaterial;
+    public Material turnOnMaterial, turnOffMaterial, wrongTurnOff, wrongTurnOn;
 
     void Start()
     {
+      
+        userInformationLightController = userInformation.GetComponent<UserInformationLightController>();
         this.InitTaskValues();
     }
+
 
     public void CheckResults()
     {
@@ -33,7 +37,15 @@ public class SFRegisterController : MonoBehaviour
         lightsSecondLine.GetComponent<LightsController>().InitLightsWithMistakes(secondNumber);
         lightsResult.GetComponent<LightsController>().InitLightsWithMistakes(linesSum);
         this.SetSFFlags();
-        this.AnswerHasMistakes();
+       
+
+        if (!userInformationLightController.timeIsOver())
+        {
+            userInformationLightController.addTaskDone();
+
+            if (!this.AnswerHasMistakes())
+                userInformationLightController.addTaskDoneRight();
+        }
     }
 
     public void InitTaskValues()
@@ -48,6 +60,8 @@ public class SFRegisterController : MonoBehaviour
         linesSum = firstNumber + secondNumber;
 
         taskText.text = firstNumber + " + " + secondNumber;
+
+        userInformationLightController.addTaskDone();
 
        // lightsUserInput.GetComponent<LightsController>().InitLights();
     }
@@ -73,10 +87,10 @@ public class SFRegisterController : MonoBehaviour
         //carry flag
         if (firstNumber + secondNumber > (int)Mathf.Pow(2, 16))
             if (true != userLights[CARRY_FLAG].GetComponent<LightInformation>().State)
-                userLights[CARRY_FLAG].GetComponent<LightInformation>().setLight(true, wrongLightMaterial);
+                userLights[CARRY_FLAG].GetComponent<LightInformation>().setLight(false, wrongTurnOff);
             else
             if (false != userLights[CARRY_FLAG].GetComponent<LightInformation>().State)
-                userLights[CARRY_FLAG].GetComponent<LightInformation>().setLight(false, wrongLightMaterial);
+                userLights[CARRY_FLAG].GetComponent<LightInformation>().setLight(true, wrongTurnOn);
     }
 
     void SetParityFlag()
@@ -92,7 +106,10 @@ public class SFRegisterController : MonoBehaviour
         state = (paritySum % 2) == 0 ? true : false; 
 
         if(userLights[PARITY_FLAG].GetComponent<LightInformation>().State !=  state)
-            userLights[PARITY_FLAG].GetComponent<LightInformation>().setLight(state, wrongLightMaterial);
+            if(userLights[PARITY_FLAG].GetComponent<LightInformation>().State)
+                userLights[PARITY_FLAG].GetComponent<LightInformation>().setLight(state, wrongTurnOn);
+            else
+                userLights[PARITY_FLAG].GetComponent<LightInformation>().setLight(state, wrongTurnOff);
     }
 
     void SetAuxilliaryFlag()
@@ -104,7 +121,10 @@ public class SFRegisterController : MonoBehaviour
         bool state = ((firstNumberMod + secondNumberMod) > 16) ? true : false;
 
         if (userLights[AUXILLIARY_FLAG].GetComponent<LightInformation>().State != state)
-            userLights[AUXILLIARY_FLAG].GetComponent<LightInformation>().setLight(state, wrongLightMaterial);
+            if (userLights[AUXILLIARY_FLAG].GetComponent<LightInformation>().State)
+                userLights[AUXILLIARY_FLAG].GetComponent<LightInformation>().setLight(state, wrongTurnOn);
+            else
+                userLights[AUXILLIARY_FLAG].GetComponent<LightInformation>().setLight(state, wrongTurnOff);
     }
 
     void SetZeroFlag()
@@ -115,17 +135,25 @@ public class SFRegisterController : MonoBehaviour
         bool state = ((firstNumber + secondNumber) % (int)Mathf.Pow(2,16)  == 0) ? true : false;
 
         if (userLights[ZERO_FLAG].GetComponent<LightInformation>().State != state)
-            userLights[ZERO_FLAG].GetComponent<LightInformation>().setLight(state, wrongLightMaterial);
+            if(userLights[ZERO_FLAG].GetComponent<LightInformation>().State)
+                userLights[ZERO_FLAG].GetComponent<LightInformation>().setLight(state, wrongTurnOn);
+            else
+                userLights[ZERO_FLAG].GetComponent<LightInformation>().setLight(state, wrongTurnOff);
     }
 
     void SetSignFlag()
     {
         GameObject[] userLights = (GameObject[])lightsUserInput.GetComponent<LightsController>().Lights;
 
-        bool state = (int)((firstNumber + secondNumber) / (int)Mathf.Pow(2, 16)) == 1 ? true : false;
+        bool state = (int)((firstNumber + secondNumber) / (int)Mathf.Pow(2, 7)) == 1 ? true : false;
+
+        
 
         if (userLights[SIGN_FLAG].GetComponent<LightInformation>().State != state)
-            userLights[SIGN_FLAG].GetComponent<LightInformation>().setLight(state, wrongLightMaterial);
+            if (userLights[SIGN_FLAG].GetComponent<LightInformation>().State)
+                userLights[SIGN_FLAG].GetComponent<LightInformation>().setLight(state, wrongTurnOn);
+            else
+                userLights[SIGN_FLAG].GetComponent<LightInformation>().setLight(state, wrongTurnOff);
     }
 
     void SetTrapFlag()
@@ -141,10 +169,15 @@ public class SFRegisterController : MonoBehaviour
     {
         GameObject[] userLights = (GameObject[])lightsUserInput.GetComponent<LightsController>().Lights;
 
-        bool state = (int)((firstNumber + secondNumber) / (int)Mathf.Pow(2, 16)) == 1 ? true : false;
+        bool state = (int)((firstNumber + secondNumber) / (int)Mathf.Pow(2, 7)) == 1 ? true : false;
+
+        state = state || ((firstNumber + secondNumber) >= (int)Mathf.Pow(2, 8));
 
         if (userLights[OVERFLOW_FALG].GetComponent<LightInformation>().State != state)
-            userLights[OVERFLOW_FALG].GetComponent<LightInformation>().setLight(state, wrongLightMaterial);
+            if (userLights[OVERFLOW_FALG].GetComponent<LightInformation>().State)
+                userLights[OVERFLOW_FALG].GetComponent<LightInformation>().setLight(state, wrongTurnOn);
+            else
+                userLights[OVERFLOW_FALG].GetComponent<LightInformation>().setLight(state, wrongTurnOff);
     }
 
     void setOthersFlags()
@@ -163,7 +196,7 @@ public class SFRegisterController : MonoBehaviour
                 i != OVERFLOW_FALG )
                 && userLights[i].GetComponent<LightInformation>().State )
             {
-                userLights[i].GetComponent<LightInformation>().setLight(false, wrongLightMaterial);
+                userLights[i].GetComponent<LightInformation>().setLight(false, wrongTurnOn);
             }
     }
 
@@ -172,7 +205,7 @@ public class SFRegisterController : MonoBehaviour
         GameObject[] userLights = (GameObject[])lightsUserInput.GetComponent<LightsController>().Lights;
 
         foreach (GameObject light in userLights)
-            if (light.GetComponent<LightInformation>().Material == wrongLightMaterial)
+            if (light.GetComponent<LightInformation>().Material == wrongTurnOn || light.GetComponent<LightInformation>().Material == wrongTurnOff)
                 return true;
 
         return false;

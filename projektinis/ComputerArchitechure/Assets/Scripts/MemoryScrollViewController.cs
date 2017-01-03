@@ -25,7 +25,7 @@ public class MemoryScrollViewController : MonoBehaviour {
     public void SetInputColor(bool _isRightAnswer)
     {
         if (_isRightAnswer)
-            inputField.image.color = Color.blue;
+            inputField.image.color = Color.green;
         else
             inputField.image.color = Color.red;
 
@@ -51,6 +51,9 @@ public class MemoryScrollViewController : MonoBehaviour {
             memoryInfo.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = startSpValue.ToString("X");
             memoryInfo.transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().text = Random.Range(16, (int)(Mathf.Pow(2, 8))).ToString("X");
 
+            memoryInfo.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().color = Color.yellow;
+            memoryInfo.transform.GetChild(1).transform.GetChild(0).GetComponent<Text>().color = Color.yellow;
+
             startSpValue += 2;
         }
 
@@ -62,11 +65,13 @@ public class MemoryScrollViewController : MonoBehaviour {
        
         button = memoryInfo.transform.GetChild(0).gameObject.GetComponent<Button>();
         button.transform.GetChild(0).GetComponent<Text>().text = startSpValue.ToString("X");
-        button.image.color = Color.green;
+        //  button.image.color = Color.green;
+      //  button.transform.GetChild(0).GetComponent<Text>().color = Color.red;
 
         inputField = memoryInfo.transform.GetChild(1).gameObject.GetComponent<InputField>();
         inputField.text = "result";
-        inputField.image.color = Color.green;
+    //    inputField.GetComponent<Text>().color = Color.red;
+        //  inputField.image.color = Color.green;
 
     }
 }
