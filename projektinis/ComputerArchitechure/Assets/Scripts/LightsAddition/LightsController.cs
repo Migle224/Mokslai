@@ -15,7 +15,7 @@ public class LightsController : MonoBehaviour {
 
     }
 
-    private IEnumerator coroutine;
+    private static  IEnumerator coroutine;
 
     public ControllerType controllerType;
 
@@ -117,6 +117,9 @@ public class LightsController : MonoBehaviour {
     }
     public void InitLights()
     {
+        if(coroutine != null)
+            StopCoroutine(coroutine);
+
         int counter = 1;
         LightInformation lightInformation;
 
