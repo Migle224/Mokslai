@@ -22,7 +22,7 @@ public class LightsController : MonoBehaviour {
     public GameObject light0, light1, light2, light3, light4, light5, light6, light7,
                         light8, light9, light10, light11, light12, light13, light14, light15;
 
-    public bool isAnswerCorrect;
+    public bool isAnswerCorrect = true;
 
     private int lightsValue;
 
@@ -117,8 +117,7 @@ public class LightsController : MonoBehaviour {
     }
     public void InitLights()
     {
-        if(coroutine != null)
-            StopCoroutine(coroutine);
+        StopAllCoroutines();
 
         int counter = 1;
         LightInformation lightInformation;
@@ -326,6 +325,7 @@ public class LightsController : MonoBehaviour {
 
     public void ResetLights()
     {
+        StopAllCoroutines();
         foreach (GameObject light in lights)
             light.GetComponent<LightInformation>().setLight(false, turnOffMaterial);
         lightsValue = 0;

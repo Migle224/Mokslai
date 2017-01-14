@@ -11,8 +11,8 @@ public class UserInformationLightController : MonoBehaviour
     public Text timeLeftText, scoreText, tasksDoneText, tasksDoneRightText;
     string timeLeftString = "Time: ", scoreTextString = "Score: ", tasksDoneString = "Tasks done: ", tasksDoneRightString = "Task done right: ";
     int tasksDone = 0, tasksDoneRight = 0;
-    
 
+    bool taskNotCounted = true;
 
    /* public enum TrainingType
     {
@@ -59,6 +59,7 @@ public class UserInformationLightController : MonoBehaviour
     public void addTaskDone()
     {
         StopAllCoroutines();
+        this.taskNotCounted = true;
         tasksDoneText.text = tasksDoneString + ++tasksDone;
         this.calcScores();
         if (tasksDone >= 10)
@@ -67,8 +68,12 @@ public class UserInformationLightController : MonoBehaviour
 
     public void addTaskDoneRight()
     {
-        tasksDoneRightText.text = tasksDoneRightString + ++tasksDoneRight;
-        this.calcScores();
+        if (this.taskNotCounted)
+        {
+            tasksDoneRightText.text = tasksDoneRightString + ++tasksDoneRight;
+            this.calcScores();
+            this.taskNotCounted = false;
+        }
     }
 
     void calcScores()

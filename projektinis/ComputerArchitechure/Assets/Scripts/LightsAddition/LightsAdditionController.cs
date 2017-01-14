@@ -34,15 +34,23 @@ public class LightsAdditionController : MonoBehaviour {
            // Debug.Log(lightsFirstLine.GetComponent<LightsController>().CalculateLightsValue());
            // Debug.Log(lightsSecondLine.GetComponent<LightsController>().CalculateLightsValue());
 
-            if (lightsResult.GetComponent<LightsController>().isAnswerCorrect)
-                userInformationLightController.addTaskDoneRight();
+         /*   if (lightsResult.GetComponent<LightsController>().isAnswerCorrect)
+                userInformationLightController.addTaskDoneRight();*/
         }
 
     }
 
     public void ResetLightsAddition()
     {
+        int sum = lightsFirstLine.GetComponent<LightsController>().LightsValue + lightsSecondLine.GetComponent<LightsController>().LightsValue;
+        lightsResult.GetComponent<LightsController>().StopCoroutineResult(sum, lightsResultIndicator, lightsFirstLine, lightsSecondLine, lightsUserInput);
+
+        if (lightsResult.GetComponent<LightsController>().isAnswerCorrect)
+            userInformationLightController.addTaskDoneRight();
+
+        StopAllCoroutines();
         userInformationLightController.addTaskDone();
+
         lightsFirstLine.GetComponent<LightsController>().InitLights();
         lightsSecondLine.GetComponent<LightsController>().InitLights();
         lightsResult.GetComponent<LightsController>().ResetLights();
