@@ -9,7 +9,7 @@ public class UserInformationLightController : MonoBehaviour
     float timeLeft, score;
     public float timeForTask;
     public Text timeLeftText, scoreText, tasksDoneText, tasksDoneRightText;
-    string timeLeftString = "Time left: ", scoreTextString = "Score: ", tasksDoneString = "Tasks done: ", tasksDoneRightString = "Task done right: ";
+    string timeLeftString = "Time: ", scoreTextString = "Score: ", tasksDoneString = "Tasks done: ", tasksDoneRightString = "Task done right: ";
     int tasksDone = 0, tasksDoneRight = 0;
     
 
@@ -41,31 +41,28 @@ public class UserInformationLightController : MonoBehaviour
         tasksDoneRightText.text = tasksDoneRightString + "0";
         tasksDoneText.text = tasksDoneString + "0";
         scoreText.text = scoreTextString + "0";
-        timeLeft = timeForTask;
+       // timeLeft = timeForTask;
         timeIsOverText.SetActive(false);
-        Invoke("EndLevel", timeForTask);
+       // Invoke("EndLevel", timeForTask);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timeLeft >= 0)
-        {
-            timeLeft -= Time.deltaTime;
-            if (timeLeft >= 0)
-                timeLeftText.text = timeLeftString + timeLeft.ToString("F1");
-            else
-            {
-                timeLeftText.text = timeLeftString + "0";
-                timeOverText.text += score;
-            }
-        }
+
+        timeLeft = Time.timeSinceLevelLoad;
+
+        timeLeftText.text = timeLeftString + timeLeft.ToString("F1");
+
     }
 
     public void addTaskDone()
     {
+        StopAllCoroutines();
         tasksDoneText.text = tasksDoneString + ++tasksDone;
         this.calcScores();
+        if (tasksDone >= 10)
+            this.EndLevel();
     }
 
     public void addTaskDoneRight()
@@ -76,7 +73,7 @@ public class UserInformationLightController : MonoBehaviour
 
     void calcScores()
     {
-        score = (int)(timeForTask * tasksDoneRight * 1000 / tasksDone) ;
+        score = (int)(timeForTask * tasksDoneRight * 1000 / (tasksDone * timeLeft)) ;
         scoreText.text = scoreTextString + score;
     }
 
@@ -92,6 +89,7 @@ public class UserInformationLightController : MonoBehaviour
         ButtonLightInformation.timeIsOver = true;
 
         timeIsOverText.SetActive(true);
+        timeOverText.text = "Your score: " + score;
     }
 
     public void SaveLevelInformation()

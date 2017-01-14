@@ -9,7 +9,7 @@ public class MemoryScrollViewController : MonoBehaviour {
     GameObject memoryInfo;
     GameObject content;
     int buttonAmount = 8;
-    RectTransform rt;
+  //  RectTransform rt;
     float buttonHeight;
 
     InputField inputField;

@@ -164,7 +164,7 @@ public class LightsController : MonoBehaviour {
                                 GameObject _lightsSecondLine,
                                 GameObject _lightsUserInput)
     {
-        StopCoroutine(coroutine);
+        StopAllCoroutines();
         ShowLightsResultWithoutAnimation(_result, _lightsResultIndicator, _lightsFirstLine, _lightsSecondLine, _lightsUserInput);
     }
 
@@ -174,6 +174,7 @@ public class LightsController : MonoBehaviour {
                                 GameObject _lightsSecondLine,
                                 GameObject _lightsUserInput)
     {
+        StopAllCoroutines();
         coroutine = ShowLightsResultWithAnimation(_result, _lightsResultIndicator, _lightsFirstLine, _lightsSecondLine, _lightsUserInput);
         StartCoroutine(coroutine);
     }

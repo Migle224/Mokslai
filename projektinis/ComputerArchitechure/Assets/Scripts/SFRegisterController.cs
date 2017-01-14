@@ -41,7 +41,7 @@ public class SFRegisterController : MonoBehaviour
 
         if (!userInformationLightController.timeIsOver())
         {
-            userInformationLightController.addTaskDone();
+          //  userInformationLightController.addTaskDone();
 
             if (!this.AnswerHasMistakes())
                 userInformationLightController.addTaskDoneRight();

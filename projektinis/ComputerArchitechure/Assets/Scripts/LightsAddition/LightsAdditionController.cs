@@ -27,14 +27,14 @@ public class LightsAdditionController : MonoBehaviour {
 
         if (!userInformationLightController.timeIsOver())
         {
-            userInformationLightController.addTaskDone();
+            //userInformationLightController.addTaskDone();
 
-            Debug.Log(lightsResult.GetComponent<LightsController>().CalculateLightsValue());
-            Debug.Log(lightsUserInput.GetComponent<LightsController>().CalculateLightsValue());
-            Debug.Log(lightsFirstLine.GetComponent<LightsController>().CalculateLightsValue());
-            Debug.Log(lightsSecondLine.GetComponent<LightsController>().CalculateLightsValue());
+           // Debug.Log(lightsResult.GetComponent<LightsController>().CalculateLightsValue());
+           // Debug.Log(lightsUserInput.GetComponent<LightsController>().CalculateLightsValue());
+           // Debug.Log(lightsFirstLine.GetComponent<LightsController>().CalculateLightsValue());
+           // Debug.Log(lightsSecondLine.GetComponent<LightsController>().CalculateLightsValue());
 
-            if (lightsResult.GetComponent<LightsController>().CalculateLightsValue() == lightsUserInput.GetComponent<LightsController>().CalculateLightsValue())
+            if (lightsResult.GetComponent<LightsController>().isAnswerCorrect)
                 userInformationLightController.addTaskDoneRight();
         }
 
@@ -42,6 +42,7 @@ public class LightsAdditionController : MonoBehaviour {
 
     public void ResetLightsAddition()
     {
+        userInformationLightController.addTaskDone();
         lightsFirstLine.GetComponent<LightsController>().InitLights();
         lightsSecondLine.GetComponent<LightsController>().InitLights();
         lightsResult.GetComponent<LightsController>().ResetLights();

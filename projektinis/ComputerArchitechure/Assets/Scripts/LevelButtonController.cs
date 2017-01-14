@@ -20,7 +20,7 @@ public class LevelButtonController : MonoBehaviour {
     public void ChangeVisibility()
     {
         isActive = isActive == true ? false : true;
-        gameObject.active = isActive;
+        gameObject.SetActive( isActive);
     }
 
     public void LoadTaskLevel()

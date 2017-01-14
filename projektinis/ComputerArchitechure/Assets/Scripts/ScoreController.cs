@@ -23,17 +23,17 @@ public class ScoreController : MonoBehaviour {
     public GameObject scoreInfoPrefab;
     public GameObject infoHeader;
 
-    string[][] scoreInfoDetails;
+ //   string[][] scoreInfoDetails;
 
     GameObject scoreInfo, scoreInfoText;
-    Text text;
+ //   Text text;
 
-    DateTime dateTime;
-    int id, tasksDone, tasksDoneRight;
-    float score, time;
-    TaskType tasktype;
-    TrainingType trainingType;
-    string username;
+   // DateTime dateTime;
+  //  int tasksDone, tasksDoneRight;
+  //  float  time;
+  //  TaskType tasktype;
+  //  TrainingType trainingType;
+   // string username;
     float textPositionDiference = 20;
 
 
